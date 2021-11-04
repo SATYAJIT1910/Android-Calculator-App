@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
 
+
     private Button n9;
     private Button n8;
     private Button n7;
@@ -26,55 +27,46 @@ public class MainActivity extends AppCompatActivity {
     private Button add;
     private Button div;
     private TextView newView;
+    String displayString;
+
+    public void initialization() {
+        n9 = findViewById(R.id.n9);
+        n8 = findViewById(R.id.n8);
+        n7 = findViewById(R.id.n7);
+        n6 = findViewById(R.id.n6);
+        n5 = findViewById(R.id.n5);
+        n4 = findViewById(R.id.n4);
+        n3 = findViewById(R.id.n3);
+        n2 = findViewById(R.id.n2);
+        n1 = findViewById(R.id.n1);
+        n0 = findViewById(R.id.n0);
+        newView = findViewById(R.id.textView);
+        mul = findViewById(R.id.mul);
+        div = findViewById(R.id.div);
+        add = findViewById(R.id.add);
+        sub = findViewById(R.id.sub);
+        C = findViewById(R.id.Clear);
+        Result = findViewById(R.id.calculate);
+        displayString = "";
+        newView.setText(displayString);
+
+    }
+    public void numKeyPressed(View view){
+        Button b= (Button) view;
+        String s=b.getText().toString();
+        displayString+=s;
+        newView.setText(displayString);
+    }
+    public void clear(View view){
+        displayString="";
+      newView.setText(displayString);
+    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        n9=findViewById(R.id.n9);
-        n8=findViewById(R.id.n8);
-        n7=findViewById(R.id.n7);
-        n6=findViewById(R.id.n6);
-        n5=findViewById(R.id.n5);
-        n4=findViewById(R.id.n4);
-        n3=findViewById(R.id.n3);
-        n2=findViewById(R.id.n2);
-        n1=findViewById(R.id.n1);
-        n0=findViewById(R.id.n0);
-        newView=findViewById(R.id.textView);
-        mul=findViewById(R.id.mul);
-        div=findViewById(R.id.div);
-        add=findViewById(R.id.add);
-        sub=findViewById(R.id.sub);
-        C=findViewById(R.id.Clear);
-        Result=findViewById(R.id.calculate);
-
-
-        n9.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                newView.setText("9");
-            }
-        });
-
-
-
-
-
-
-
-
-
-
-        Result.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-
-
-
-            }
-        });
+        initialization();
     }
 }
