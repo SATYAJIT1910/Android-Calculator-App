@@ -7,6 +7,15 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+/**
+ * Author Satyajit Ghosh
+ * Since 04-11-2021
+ *
+ * */
+
 public class MainActivity extends AppCompatActivity {
 
 
@@ -62,11 +71,56 @@ public class MainActivity extends AppCompatActivity {
       newView.setText(displayString);
     }
 
+    static Pattern pattern = Pattern.compile("([0-9]+)([+-/\\*])([0-9]+)");
+
+    public static int calculate(String arg) {
+        Matcher matcher = pattern.matcher(arg);
+        if (matcher.find()) {
+            int a = Integer.parseInt(matcher.group(1));
+            int b = Integer.parseInt(matcher.group(3));
+            String operator = matcher.group(2);
+            if ("+".equals(operator)) {
+                return a+b;
+            } else if ("-".equals(operator)) {
+                return a-b;
+            } else if ("/".equals(operator)) {
+                if(b==0){
+                    throw new ArithmeticException();
+                }
+                return a/b;
+            } else if ("*".equals(operator)) {
+                return a*b;
+            }
+        }
+        throw new IllegalArgumentException("Could not parse '" + arg + " '");
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initialization();
+        Result.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try{
+                displayString=String.valueOf(calculate(displayString));
+                newView.setText(displayString);
+                }catch (IllegalArgumentException e){
+                    displayString="Expression is invalid";
+
+                }
+                catch (ArithmeticException e){
+                    displayString="Cannot Divide by Zero";
+
+                }
+                finally {
+                    newView.setText(displayString);
+
+                }
+            }
+        });
+
+
     }
 }
